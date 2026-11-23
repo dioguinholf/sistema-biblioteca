@@ -1,0 +1,246 @@
+/* ===== Sistema de Biblioteca — tema minimalista ===== */
+:root {
+  --bg: #fafaf9;
+  --surface: #ffffff;
+  --text: #18181b;
+  --muted: #8a8a93;
+  --line: #e7e7e4;
+  --accent: #2f5bff;
+  --danger: #e5484d;
+  --ok: #18a058;
+  --radius: 8px;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e0e10;
+    --surface: #141417;
+    --text: #ededef;
+    --muted: #71717a;
+    --line: #26262b;
+    --accent: #6b8bff;
+  }
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+/* ---------- Cabeçalho ---------- */
+header {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 0;
+}
+
+.marca {
+  font-family: var(--mono);
+  font-size: .75rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+header h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -.035em;
+  margin: .35rem 0 2rem;
+}
+
+nav {
+  display: flex;
+  gap: 1.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.aba {
+  background: none;
+  border: none;
+  padding: 0 0 .85rem;
+  font: inherit;
+  font-size: .95rem;
+  color: var(--muted);
+  cursor: pointer;
+  position: relative;
+  transition: color .15s;
+}
+.aba:hover { color: var(--text); }
+.aba.ativa { color: var(--text); }
+.aba.ativa::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 2px;
+  background: var(--text);
+}
+
+/* ---------- Conteúdo ---------- */
+main {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+.painel { display: grid; gap: 3rem; animation: surgir .25s ease; }
+
+@keyframes surgir {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.card h2 {
+  font-size: .8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-bottom: 1.1rem;
+}
+
+/* ---------- Formulários ---------- */
+.campos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+
+input, select {
+  width: 100%;
+  font: inherit;
+  font-size: .95rem;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: .7rem .85rem;
+  transition: border-color .15s, box-shadow .15s;
+}
+input::placeholder { color: var(--muted); }
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* remove setinhas do input number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; }
+
+button {
+  font: inherit;
+  font-size: .92rem;
+  font-weight: 500;
+  border: none;
+  border-radius: var(--radius);
+  padding: .7rem 1.25rem;
+  background: var(--text);
+  color: var(--bg);
+  cursor: pointer;
+  transition: opacity .15s, transform .05s;
+}
+button:hover { opacity: .85; }
+button:active { transform: scale(.98); }
+
+.busca {
+  display: flex;
+  gap: .5rem;
+  margin-bottom: 1.25rem;
+}
+.busca select { width: auto; }
+.busca input { flex: 1; }
+.busca button {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+.busca button:hover { border-color: var(--text); opacity: 1; }
+
+/* ---------- Tabela ---------- */
+table { width: 100%; border-collapse: collapse; font-size: .93rem; }
+
+th {
+  text-align: left;
+  font-size: .75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+  padding: 0 .75rem .65rem;
+  border-bottom: 1px solid var(--line);
+}
+
+td {
+  padding: .9rem .75rem;
+  border-bottom: 1px solid var(--line);
+}
+tbody tr { transition: background .12s; }
+tbody tr:hover { background: var(--surface); }
+
+td.mono { font-family: var(--mono); font-size: .85rem; color: var(--muted); }
+td:last-child { text-align: right; width: 1%; white-space: nowrap; }
+
+td.vazio {
+  text-align: center !important;
+  width: auto !important;
+  color: var(--muted);
+  padding: 3rem 0;
+  font-size: .9rem;
+}
+
+button.remover {
+  background: none;
+  color: var(--muted);
+  padding: .3rem .6rem;
+  font-size: .82rem;
+  opacity: 0;
+  transition: opacity .12s, color .12s;
+}
+tbody tr:hover button.remover { opacity: 1; }
+button.remover:hover { color: var(--danger); }
+
+/* ---------- Toast ---------- */
+.mensagem {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text);
+  color: var(--bg);
+  font-size: .9rem;
+  padding: .7rem 1.1rem .7rem 2rem;
+  border-radius: 999px;
+  z-index: 10;
+  animation: surgir .2s ease;
+}
+.mensagem::before {
+  content: "";
+  position: absolute;
+  left: .95rem; top: 50%;
+  width: 7px; height: 7px;
+  margin-top: -3.5px;
+  border-radius: 50%;
+}
+.mensagem.sucesso::before { background: var(--ok); }
+.mensagem.erro::before { background: var(--danger); }
+
+.oculto { display: none !important; }
+
+/* ---------- Celular ---------- */
+@media (max-width: 600px) {
+  header { padding-top: 2rem; }
+  .busca { flex-wrap: wrap; }
+  .busca select { width: 100%; }
+  button.remover { opacity: 1; }
+  th:nth-child(4), td:nth-child(4) { display: none; }
+}
